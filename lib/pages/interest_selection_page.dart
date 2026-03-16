@@ -11,101 +11,134 @@ class InterestSelectionPage extends StatefulWidget {
 }
 
 class _InterestSelectionPageState extends State<InterestSelectionPage> {
-  // 分类列表
-  final List<_InterestCategory> _categories = const [
-    _InterestCategory(id: 'recommend', name: '推荐'),
-    _InterestCategory(id: 'hobby', name: '爱好'),
-    _InterestCategory(id: 'travel', name: '旅行'),
-    _InterestCategory(id: 'life', name: '生活'),
-    _InterestCategory(id: 'personality', name: '性格'),
-    _InterestCategory(id: 'music', name: '音乐'),
-    _InterestCategory(id: 'sport', name: '运动'),
-    _InterestCategory(id: 'food', name: '美食'),
-    _InterestCategory(id: 'pet', name: '宠物'),
-    _InterestCategory(id: 'nature', name: '自然'),
-    _InterestCategory(id: 'art', name: '艺术'),
-    _InterestCategory(id: 'game', name: '游戏'),
+  final List<InterestCategory> _categories = [
+    InterestCategory(
+      id: 'sport',
+      name: '运动户外',
+      emoji: '⚽',
+      subcategories: [
+        '⚽足球', '🏀篮球', '🏓乒乓球', '🏸羽毛球', '🎾网球', '🚴骑行', '🏃跑步', '🏊游泳','💃🏻跳舞',
+        '⛰️爬山', '🤸跳绳', '🛼轮滑', '🛹滑板', '🚶徒步', '🏕️露营', '🤸体操', '🥋跆拳道', '⚽其他运动'
+      ],
+    ),
+    InterestCategory(
+      id: 'craft',
+      name: '手工制作',
+      emoji: '✂️',
+      subcategories: [
+        '🧩乐高', '✈️航模', '📃折纸', '🏺黏土泥塑', '🧩拼图', '🧶编织缝纫', '🔨金工木工', '🐑羊毛毡',
+        '📄纸雕', '💧流沙滴胶', '🏺陶艺', '🎨拼贴画', '♻️废旧改造', '📿串珠', '✂️其他制作'
+      ],
+    ),
+    InterestCategory(
+      id: 'reading',
+      name: '阅读写作',
+      emoji: '📚',
+      subcategories: [
+        '📖读诗歌', '📙读小说', '📗读散文', '📰读报刊', '🔬读科普', '📜读历史', '📚读社科', '🌍读外语',
+        '✍️写小说散文', '📝写诗', '📓写日记', '📔做读书笔记', '📚其他读物'
+      ],
+    ),
+    InterestCategory(
+      id: 'music',
+      name: '音乐世界',
+      emoji: '🎵',
+      subcategories: [
+        '🎤独唱', '🎙️合唱', '🎶民乐演奏', '🎹西乐演奏', '📝谱曲', '🎧流行乐', '🎼古典乐', '🎸摇滚乐',
+        '🪇民谣', '🎤说唱', '🎵R&B', '🎷爵士', '🎬动漫影视音乐', '🎵纯音乐', '🎵其他音乐'
+      ],
+    ),
+    InterestCategory(
+      id: 'art',
+      name: '美术设计',
+      emoji: '🎨',
+      subcategories: [
+        '🎨传统绘画', '✍🏻漫画插画', '🖌️书法', '📷摄影', '📔手账', '🏗️建模', '✏️涂鸦', '🎨逛美术馆',
+        '🖼️收藏画集', '🎨其他美术设计'
+      ],
+    ),
+    InterestCategory(
+      id: 'tech',
+      name: '科技科创',
+      emoji: '🔬',
+      subcategories: [
+        '💻编程', '🤖机器人', '🔌pcb电路板', '🖨️3D打印', '🔬科学实验', '🧮梳理推算', '🔭天文观测', '🔬其余科创'
+      ],
+    ),
+    InterestCategory(
+      id: 'movie',
+      name: '电影戏剧',
+      emoji: '🎬',
+      subcategories: [
+        '🎬看电影', '🎵音乐剧', '🎭话剧', '🎤歌剧', '💃舞剧', '🎭戏剧表演', '📹电影拍摄', '🎤配音'
+      ],
+    ),
+    InterestCategory(
+      id: 'acgn',
+      name: 'ACGN',
+      emoji: '🎮',
+      subcategories: [
+        '📺番剧', '📚漫画', '💻PC游戏', '🎮主机游戏', '📱手游', '📖轻小说', '🎮视觉小说', '🎨同人创作', '🎮其他acgn相关'
+      ],
+    ),
+    InterestCategory(
+      id: 'board',
+      name: '棋牌桌游',
+      emoji: '♟️',
+      subcategories: [
+        '♟️象棋', '⚪围棋', '⚫五子棋', '✈️飞行棋', '💰大富翁', '🎴uno', '🐺狼人杀', '📖剧本杀', '⚔️三国杀', '♟️其他棋牌桌游'
+      ],
+    ),
+    InterestCategory(
+      id: 'food',
+      name: '美食烹饪',
+      emoji: '🍳',
+      subcategories: [
+        '🥢中餐', '🍝西餐', '🍣日料', '🍜韩餐', '🍰甜点', '🥛奶制品', '🍪小食零食', '📖研究菜谱', '🍳其他食物制作'
+      ],
+    ),
+    InterestCategory(
+      id: 'animal',
+      name: '动物植物',
+      emoji: '🐶',
+      subcategories: [
+        '🐶狗狗', '🐱猫咪', '🐰兔', '🐭鼠', '🐦鸟', '🐟鱼', '🦎爬行动物', '🦋昆虫', '🌵多肉', '🌳树木', '🌸花草'
+      ],
+    ),
+    InterestCategory(
+      id: 'life',
+      name: '休闲生活',
+      emoji: '🏖️',
+      subcategories: [
+        '✈️旅行', '🏙️城市探索', '🚶散步', '🧹整理', '💬聊天', '🛒逛超市', '📮集邮', '🏖️其他活动'
+      ],
+    ),
   ];
 
-  // 所有兴趣项（40+，按分类组织）
-  late final List<_InterestItem> _allItems = [
-    // 推荐
-    const _InterestItem('recommend', '🌟 一起玩', '推荐'),
-    const _InterestItem('recommend', '🤝 交新朋友', '推荐'),
-    const _InterestItem('recommend', '🎉 派对聚会', '推荐'),
-    const _InterestItem('recommend', '🏟 亲子活动', '推荐'),
-    // 爱好
-    const _InterestItem('hobby', '⚽ 足球', '爱好'),
-    const _InterestItem('hobby', '🏀 篮球', '爱好'),
-    const _InterestItem('hobby', '🎾 网球', '爱好'),
-    const _InterestItem('hobby', '🏓 乒乓球', '爱好'),
-    const _InterestItem('hobby', '🎨 画画', '爱好'),
-    const _InterestItem('hobby', '🧩 拼图', '爱好'),
-    const _InterestItem('hobby', '📚 阅读', '爱好'),
-    const _InterestItem('hobby', '🎮 游戏', '爱好'),
-    // 旅行
-    const _InterestItem('travel', '🏖 海边玩水', '旅行'),
-    const _InterestItem('travel', '⛰ 爬山徒步', '旅行'),
-    const _InterestItem('travel', '🏕 露营野餐', '旅行'),
-    const _InterestItem('travel', '🏙 城市探索', '旅行'),
-    const _InterestItem('travel', '🚂 火车旅行', '旅行'),
-    // 生活
-    const _InterestItem('life', '🍳 一起做饭', '生活'),
-    const _InterestItem('life', '🛒 逛超市', '生活'),
-    const _InterestItem('life', '🧹 整理房间', '生活'),
-    const _InterestItem('life', '🚌 上下学路上聊天', '生活'),
-    // 性格
-    const _InterestItem('personality', '😄 外向开朗', '性格'),
-    const _InterestItem('personality', '🤫 安静内向', '性格'),
-    const _InterestItem('personality', '🧠 爱思考', '性格'),
-    const _InterestItem('personality', '🎭 爱表演', '性格'),
-    const _InterestItem('personality', '🤹 爱尝试新鲜事物', '性格'),
-    // 音乐
-    const _InterestItem('music', '🎵 听流行歌', '音乐'),
-    const _InterestItem('music', '🎹 钢琴', '音乐'),
-    const _InterestItem('music', '🎻 小提琴', '音乐'),
-    const _InterestItem('music', '🥁 打鼓', '音乐'),
-    const _InterestItem('music', '🎤 唱歌', '音乐'),
-    // 运动
-    const _InterestItem('sport', '🚴 骑自行车', '运动'),
-    const _InterestItem('sport', '🏊 游泳', '运动'),
-    const _InterestItem('sport', '🤸 体操', '运动'),
-    const _InterestItem('sport', '🏸 羽毛球', '运动'),
-    const _InterestItem('sport', '🥋 跆拳道', '运动'),
-    // 美食
-    const _InterestItem('food', '🍕 披萨', '美食'),
-    const _InterestItem('food', '🍣 寿司', '美食'),
-    const _InterestItem('food', '🍰 蛋糕甜品', '美食'),
-    const _InterestItem('food', '🍜 面条', '美食'),
-    const _InterestItem('food', '🍎 健康水果', '美食'),
-    // 宠物
-    const _InterestItem('pet', '🐶 狗狗', '宠物'),
-    const _InterestItem('pet', '🐱 猫咪', '宠物'),
-    const _InterestItem('pet', '🐰 小兔子', '宠物'),
-    const _InterestItem('pet', '🐹 仓鼠', '宠物'),
-    const _InterestItem('pet', '🐦 小鸟', '宠物'),
-    // 自然
-    const _InterestItem('nature', '🌳 森林', '自然'),
-    const _InterestItem('nature', '🌊 大海', '自然'),
-    const _InterestItem('nature', '🌌 星空', '自然'),
-    const _InterestItem('nature', '🌈 彩虹', '自然'),
-    const _InterestItem('nature', '🌻 植物花草', '自然'),
-    // 艺术
-    const _InterestItem('art', '🎭 戏剧表演', '艺术'),
-    const _InterestItem('art', '🎬 看电影', '艺术'),
-    const _InterestItem('art', '📷 拍照', '艺术'),
-    const _InterestItem('art', '🎧 听故事', '艺术'),
-    // 游戏
-    const _InterestItem('game', '🧩 桌游', '游戏'),
-    const _InterestItem('game', '♟ 国际象棋', '游戏'),
-    const _InterestItem('game', '🎮 主机游戏', '游戏'),
-    const _InterestItem('game', '📱 手机小游戏', '游戏'),
-  ];
-
-  // 用户已选择的兴趣
+  List<String> _selectedCategoryIds = [];
+  String _currentCategoryId = '';
   final Set<String> _selectedInterests = {};
 
-  String _currentCategoryId = 'recommend';
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args is List<String>) {
+      _selectedCategoryIds = args;
+      if (_selectedCategoryIds.isNotEmpty) {
+        // 按固定顺序排序的分类列表中找到第一个被选中的分类
+        final firstSelectedCategory = _categories.firstWhere(
+          (cat) => _selectedCategoryIds.contains(cat.id),
+          orElse: () => _categories.first,
+        );
+        _currentCategoryId = firstSelectedCategory.id;
+      }
+    }
+  }
+
+  List<InterestCategory> get _filteredCategories {
+    return _categories.where((cat) => _selectedCategoryIds.contains(cat.id)).toList();
+  }
 
   Future<void> _handleComplete() async {
     if (_selectedInterests.isEmpty) {
@@ -130,17 +163,13 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
     }
 
     try {
-      // 保存到数据库
       final interestsList = _selectedInterests.toList();
       await DatabaseHelper.instance.updateChildProfile(
         currentUser.id,
         {'interests_json': jsonEncode(interestsList)},
       );
 
-      // 更新当前用户
       CurrentUser.setInterests(interestsList);
-
-      // 跳转到首页
       Navigator.pushReplacementNamed(context, '/home');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -158,7 +187,7 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
       backgroundColor: Colors.purple[50],
       appBar: AppBar(
         title: const Text(
-          '选择兴趣爱好',
+          '选择具体爱好',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 24,
@@ -166,6 +195,12 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
         ),
         backgroundColor: Colors.purple[400],
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: SafeArea(
         child: Column(
@@ -176,7 +211,6 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // 提示文字
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -197,7 +231,7 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              '选择你喜欢的兴趣爱好，我们会为你推荐志同道合的小伙伴！',
+                              '选择你喜欢的具体兴趣爱好！想重新选择大类？点击左上角的返回按钮。',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.orange[900],
@@ -209,9 +243,8 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                       ),
                     ),
                     const SizedBox(height: 32),
-                    // 兴趣选择标题
                     Text(
-                      '🎯 选择你的兴趣爱好',
+                      '🎯 选择具体爱好',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -219,89 +252,85 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // 分类横向导航
-                    SizedBox(
-                      height: 40,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _categories.length,
-                        separatorBuilder: (_, __) => const SizedBox(width: 8),
-                        itemBuilder: (context, index) {
-                          final cat = _categories[index];
-                          final bool selected = cat.id == _currentCategoryId;
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _currentCategoryId = cat.id;
-                              });
-                            },
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 200),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                              decoration: BoxDecoration(
-                                color: selected
-                                    ? Colors.purple[400]
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: selected
-                                      ? Colors.purple[600]!
-                                      : Colors.purple[200]!,
-                                  width: 2,
+                    if (_filteredCategories.length > 1)
+                      SizedBox(
+                        height: 40,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _filteredCategories.length,
+                          separatorBuilder: (context, index) => const SizedBox(width: 8),
+                          itemBuilder: (context, index) {
+                            final cat = _filteredCategories[index];
+                            final bool selected = cat.id == _currentCategoryId;
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _currentCategoryId = cat.id;
+                                });
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 200),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 8,
                                 ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  cat.name,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                                decoration: BoxDecoration(
+                                  color: selected
+                                      ? Colors.purple[400]
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
                                     color: selected
-                                        ? Colors.white
-                                        : Colors.purple[700],
+                                        ? Colors.purple[600]!
+                                        : Colors.purple[200]!,
+                                    width: 2,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${cat.emoji} ${cat.name}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: selected
+                                          ? Colors.white
+                                          : Colors.purple[700],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    // 兴趣图片卡片网格
+                    if (_filteredCategories.length > 1)
+                      const SizedBox(height: 20),
                     LayoutBuilder(
                       builder: (context, constraints) {
-                        final filtered = _allItems
-                            .where((item) =>
-                                item.categoryId == _currentCategoryId ||
-                                _currentCategoryId == 'recommend')
-                            .toList();
+                        final currentCategory = _filteredCategories.firstWhere(
+                          (cat) => cat.id == _currentCategoryId,
+                          orElse: () => _filteredCategories.first,
+                        );
                         return Wrap(
                           spacing: 12,
                           runSpacing: 12,
-                          children: filtered.map((item) {
-                            final String label = item.label;
-                            final bool isSelected =
-                                _selectedInterests.contains(label);
+                          children: currentCategory.subcategories.map((subcategory) {
+                            final bool isSelected = _selectedInterests.contains(subcategory);
                             return GestureDetector(
                               onTap: () {
                                 setState(() {
                                   if (isSelected) {
-                                    _selectedInterests.remove(label);
+                                    _selectedInterests.remove(subcategory);
                                   } else {
-                                    _selectedInterests.add(label);
+                                    _selectedInterests.add(subcategory);
                                   }
                                 });
                               },
                               child: _InterestCard(
-                                label: label,
-                                categoryName: item.categoryName,
+                                label: subcategory,
+                                categoryName: currentCategory.name,
                                 selected: isSelected,
-                                width:
-                                    (constraints.maxWidth - 12) / 2, // 两列布局
+                                width: (constraints.maxWidth - 12) / 2,
                               ),
                             );
                           }).toList(),
@@ -309,7 +338,6 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                       },
                     ),
                     const SizedBox(height: 24),
-                    // 已选择提示
                     if (_selectedInterests.isNotEmpty)
                       Container(
                         padding: const EdgeInsets.all(16),
@@ -346,7 +374,6 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                 ),
               ),
             ),
-            // 完成按钮
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
@@ -390,22 +417,18 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
   }
 }
 
-class _InterestCategory {
+class InterestCategory {
   final String id;
   final String name;
+  final String emoji;
+  final List<String> subcategories;
 
-  const _InterestCategory({
+  InterestCategory({
     required this.id,
     required this.name,
+    required this.emoji,
+    required this.subcategories,
   });
-}
-
-class _InterestItem {
-  final String categoryId;
-  final String label;
-  final String categoryName;
-
-  const _InterestItem(this.categoryId, this.label, this.categoryName);
 }
 
 class _InterestCard extends StatelessWidget {
@@ -448,7 +471,6 @@ class _InterestCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // 模拟图片的浅色叠层
           Positioned(
             right: -10,
             top: -10,
@@ -502,4 +524,3 @@ class _InterestCard extends StatelessWidget {
     );
   }
 }
-

@@ -6,6 +6,7 @@ class DbChildProfile {
   final String childName;
   final int age;
   final List<String> interests;
+  final List<String> personality;
   final String? parentUserId; // 绑定的家长用户ID
 
   DbChildProfile({
@@ -13,6 +14,7 @@ class DbChildProfile {
     required this.childName,
     required this.age,
     required this.interests,
+    required this.personality,
     this.parentUserId,
   });
 
@@ -30,12 +32,25 @@ class DbChildProfile {
       }
     }
 
+    List<String> personalityList = [];
+    if (map['personality_json'] != null) {
+      try {
+        final decoded = jsonDecode(map['personality_json'] as String);
+        if (decoded is List) {
+          personalityList = decoded.cast<String>();
+        }
+      } catch (e) {
+        // 解析失败，使用空列表
+      }
+    }
+
     return DbChildProfile(
       userId: map['user_id'] as String,
       childName: map['child_name'] as String,
       age: map['age'] as int,
       interests: interestsList,
-      parentUserId: map['parent_user_id'] as String?,
+      personality: personalityList,
+      parentUserId: map['parent_user_id'] as String?, 
     );
   }
 
@@ -46,6 +61,7 @@ class DbChildProfile {
       'child_name': childName,
       'age': age,
       'interests_json': jsonEncode(interests),
+      'personality_json': jsonEncode(personality),
       'parent_user_id': parentUserId,
     };
   }

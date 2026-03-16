@@ -6,7 +6,7 @@ import '../utils/navigation_helper.dart';
 import '../widgets/screen_time_banner.dart';
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +21,7 @@ class ProfilePage extends StatelessWidget {
           avatar: 'assets/images/avatar1.png',
           age: 8,
           interests: [],
+          personality: [],
           location: '附近',
           role: UserRole.child,
         );
@@ -169,6 +170,58 @@ class ProfilePage extends StatelessWidget {
                 ],
               ),
             ),
+            // 性格标签
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 16,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '🧠 性格特征',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.purple[700],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    children: displayUser.personality.map((trait) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.blue[200],
+                          borderRadius: BorderRadius.circular(24),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 1,
+                              blurRadius: 4,
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          trait,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue[900],
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+            ),
             // 如果是查看其他用户，显示操作按钮
             if (!isCurrentUser) ...[
               Padding(
@@ -250,71 +303,73 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              // 绑定状态卡片（儿童端显示）
-              FutureBuilder<String?>(
-                future: CurrentUser.user != null
-                    ? BindingService.instance
-                        .getParentByChild(CurrentUser.user!.id)
-                    : Future.value(null),
-                builder: (context, snapshot) {
-                  final boundParentId = snapshot.data;
-                  final isBound = boundParentId != null;
+              //这边写了个判断，只有儿童端显示是否绑定家长
+              if (displayUser.role == UserRole.child) ...[
+                FutureBuilder<String?>(
+                  future: CurrentUser.user != null
+                      ? BindingService.instance
+                          .getParentByChild(CurrentUser.user!.id)
+                      : Future.value(null),
+                  builder: (context, snapshot) {
+                    final boundParentId = snapshot.data;
+                    final isBound = boundParentId != null;
 
-                  return Card(
+                    return Card(
+                      margin: const EdgeInsets.symmetric(horizontal: 24),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: ListTile(
+                        leading: Icon(
+                          isBound ? Icons.check_circle : Icons.link_off,
+                          color: isBound ? Colors.green : Colors.orange,
+                        ),
+                        title: Text(isBound ? '已绑定家长' : '未绑定家长'),
+                        subtitle: Text(
+                          isBound ? '已与家长账号绑定' : '输入绑定码与家长账号绑定',
+                        ),
+                        trailing: const Icon(Icons.arrow_forward_ios),
+                        onTap: () {
+                          if (isBound) {
+                            // 已绑定，显示绑定信息
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('已绑定家长账号'),
+                              ),
+                            );
+                          } else {
+                            // 未绑定，跳转到绑定码输入页面
+                            Navigator.pushNamed(
+                              context,
+                              '/binding-code',
+                              arguments: false, // isParent = false
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 12),
+                // 家长设置：仅家长端显示，儿童端不提供家长入口
+                if (CurrentUser.isParent)
+                  Card(
                     margin: const EdgeInsets.symmetric(horizontal: 24),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: ListTile(
-                      leading: Icon(
-                        isBound ? Icons.check_circle : Icons.link_off,
-                        color: isBound ? Colors.green : Colors.orange,
-                      ),
-                      title: Text(isBound ? '已绑定家长' : '未绑定家长'),
-                      subtitle: Text(
-                        isBound ? '已与家长账号绑定' : '输入绑定码与家长账号绑定',
-                      ),
+                      leading: const Icon(Icons.family_restroom,
+                          color: Colors.green),
+                      title: const Text('家长设置'),
                       trailing: const Icon(Icons.arrow_forward_ios),
                       onTap: () {
-                        if (isBound) {
-                          // 已绑定，显示绑定信息
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('已绑定家长账号'),
-                            ),
-                          );
-                        } else {
-                          // 未绑定，跳转到绑定码输入页面
-                          Navigator.pushNamed(
-                            context,
-                            '/binding-code',
-                            arguments: false, // isParent = false
-                          );
-                        }
+                        NavigationHelper.goToTab(context, 3);
                       },
                     ),
-                  );
-                },
-              ),
-              const SizedBox(height: 12),
-              // 家长设置：仅家长端显示，儿童端不提供家长入口
-              if (CurrentUser.isParent)
-                Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
                   ),
-                  child: ListTile(
-                    leading:
-                        const Icon(Icons.family_restroom, color: Colors.green),
-                    title: const Text('家长设置'),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      NavigationHelper.goToTab(context, 3);
-                    },
-                  ),
-                ),
-              if (CurrentUser.isParent) const SizedBox(height: 12),
+                if (CurrentUser.isParent) const SizedBox(height: 12),
+              ],
             ],
           ],
         ),

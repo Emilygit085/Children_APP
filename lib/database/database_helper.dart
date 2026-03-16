@@ -66,6 +66,7 @@ class DatabaseHelper {
         child_name TEXT NOT NULL,
         age INTEGER NOT NULL,
         interests_json TEXT,
+        personality_json TEXT,
         parent_user_id TEXT,
         FOREIGN KEY (user_id) REFERENCES users (id),
         FOREIGN KEY (parent_user_id) REFERENCES users (id)

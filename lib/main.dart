@@ -6,6 +6,8 @@ import 'pages/activity_page.dart';
 import 'pages/create_activity_page.dart';
 import 'pages/profile_page.dart';
 import 'pages/interest_selection_page.dart';
+import 'pages/personality_selection_page.dart';
+import 'pages/interest_category_selection_page.dart';
 import 'pages/role_select_page.dart';
 import 'pages/binding_code_page.dart';
 import 'models/current_user.dart';
@@ -35,7 +37,6 @@ Widget _parentOnlyRoute(Widget child) {
 }
 
 void main() {
-  // 不初始化用户，让用户先选择身份
   runApp(const MyApp());
 }
 
@@ -56,7 +57,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/role-select': (context) => const RoleSelectPage(),
         '/login': (context) => const LoginPage(),
+        '/interest-category-selection': (context) => const InterestCategorySelectionPage(),
         '/interest-selection': (context) => const InterestSelectionPage(),
+        '/personality-selection': (context) => const PersonalitySelectionPage(),
         '/home': (context) => HomePage(),
         '/chat': (context) => ChatPage(),
         '/activity': (context) => ActivityPage(),

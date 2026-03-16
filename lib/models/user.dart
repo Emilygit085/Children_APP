@@ -10,6 +10,7 @@ class User {
   final String avatar;
   final int age;
   final List<String> interests;
+  final List<String> personality;
   final String location;
   final UserRole role; // 用户角色
 
@@ -19,6 +20,7 @@ class User {
     required this.avatar,
     required this.age,
     required this.interests,
+    required this.personality,
     required this.location,
     required this.role,
   });

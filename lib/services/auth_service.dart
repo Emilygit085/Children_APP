@@ -85,6 +85,7 @@ class AuthService {
         childName: childName,
         age: age,
         interests: [],
+        personality: [],
       );
       await _db.insertChildProfile(childProfile.toMap());
     }

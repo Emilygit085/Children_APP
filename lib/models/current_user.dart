@@ -31,6 +31,7 @@ class CurrentUser {
         avatar: _user!.avatar,
         age: _user!.age,
         interests: interests,
+        personality: _user!.personality,
         location: _user!.location,
         role: _user!.role,
       );
@@ -46,6 +47,7 @@ class CurrentUser {
       avatar: 'assets/images/avatar1.png', //asset assets\images\Avatar1.png
       age: 8,
       interests: [], // 初始为空，需要选择
+      personality: [], // 初始为空，需要选择
       location: '附近',
       role: UserRole.child,
     );
@@ -60,6 +62,7 @@ class CurrentUser {
       avatar: 'assets/images/avatar1.png', //asset
       age: 35,
       interests: [],
+      personality: [],
       location: '附近',
       role: UserRole.parent,
     );
