@@ -49,7 +49,8 @@ class _ScreenTimeBannerState extends State<ScreenTimeBanner> {
   Widget build(BuildContext context) {
     final usedMinutes = _state.used.inMinutes;
     final limitMinutes = _state.limit.inMinutes;
-    final remaining = (_state.limit - _state.used).inMinutes.clamp(0, limitMinutes);
+    final remaining =
+        (_state.limit - _state.used).inMinutes.clamp(0, limitMinutes);
 
     final bool reached = _state.limitReached;
 
@@ -90,9 +91,9 @@ class _ScreenTimeBannerState extends State<ScreenTimeBanner> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   '健康使用手机',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -116,4 +117,3 @@ class _ScreenTimeBannerState extends State<ScreenTimeBanner> {
     );
   }
 }
-
