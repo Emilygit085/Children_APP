@@ -65,7 +65,7 @@ class _SafetyPageState extends State<SafetyPage> {
                 ),
               ),
               value: _locationSharingEnabled,
-              activeColor: Colors.purple[400],
+              activeThumbColor: Colors.purple[400],
               onChanged: (value) {
                 setState(() {
                   _locationSharingEnabled = value;
@@ -175,4 +175,3 @@ class _SafetyPageState extends State<SafetyPage> {
     );
   }
 }
-
