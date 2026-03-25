@@ -15,6 +15,7 @@ import 'pages/parent_home_page.dart';
 import 'pages/approval_list_page.dart';
 import 'pages/safety_page.dart';
 import 'pages/screen_time_limit_page.dart';
+import 'theme/app_theme.dart';
 
 /// 家长专属路由守卫：非家长跳转 /home
 Widget _parentOnlyRoute(Widget child) {
@@ -48,16 +49,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '儿童社交 App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-        fontFamily: 'Roboto',
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       initialRoute: '/role-select',
       routes: {
         '/role-select': (context) => const RoleSelectPage(),
         '/login': (context) => const LoginPage(),
-        '/interest-category-selection': (context) => const InterestCategorySelectionPage(),
+        '/interest-category-selection': (context) =>
+            const InterestCategorySelectionPage(),
         '/interest-selection': (context) => const InterestSelectionPage(),
         '/personality-selection': (context) => const PersonalitySelectionPage(),
         '/home': (context) => HomePage(),
@@ -65,14 +65,14 @@ class MyApp extends StatelessWidget {
         '/activity': (context) => ActivityPage(),
         '/create-activity': (context) => const CreateActivityPage(),
         '/profile': (context) => ProfilePage(),
-        '/parent': (context) =>
-            _parentOnlyRoute(const ParentHomePage()),
+        '/parent': (context) => _parentOnlyRoute(const ParentHomePage()),
         '/approval-list': (context) =>
             _parentOnlyRoute(const ApprovalListPage()),
         '/safety': (context) => const SafetyPage(),
         '/screen-time-limit': (context) => const ScreenTimeLimitPage(),
         '/binding-code': (context) {
-          final isParent = ModalRoute.of(context)?.settings.arguments as bool? ?? false;
+          final isParent =
+              ModalRoute.of(context)?.settings.arguments as bool? ?? false;
           return BindingCodePage(isParent: isParent);
         },
       },
