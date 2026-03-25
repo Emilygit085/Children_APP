@@ -13,12 +13,13 @@ class FriendCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      elevation: 4,
+      elevation: 0,
       child: InkWell(
         onTap: () {
           Navigator.pushNamed(context, '/profile', arguments: friend);
@@ -33,7 +34,7 @@ class FriendCard extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 35,
-                    backgroundColor: Colors.purple[200],
+                    backgroundColor: colorScheme.secondaryContainer,
                     backgroundImage:
                         AssetImage(friend.avatar), // asset instead of network
                   ),
@@ -44,10 +45,10 @@ class FriendCard extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: Colors.orange[400],
+                          color: colorScheme.tertiary,
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: Colors.white,
+                            color: colorScheme.surface,
                             width: 2,
                           ),
                         ),
@@ -86,7 +87,7 @@ class FriendCard extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.orange[100],
+                              color: colorScheme.tertiaryContainer,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
@@ -95,14 +96,14 @@ class FriendCard extends StatelessWidget {
                                 Icon(
                                   Icons.favorite,
                                   size: 14,
-                                  color: Colors.orange[800],
+                                  color: colorScheme.onTertiaryContainer,
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
                                   '$commonInterestsCount 个共同兴趣',
                                   style: TextStyle(
                                     fontSize: 11,
-                                    color: Colors.orange[800],
+                                    color: colorScheme.onTertiaryContainer,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -115,7 +116,7 @@ class FriendCard extends StatelessWidget {
                     Text(
                       '${friend.age}岁 · ${friend.location}',
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: colorScheme.onSurfaceVariant,
                         fontSize: 14,
                       ),
                     ),
@@ -130,7 +131,7 @@ class FriendCard extends StatelessWidget {
                             interest,
                             style: const TextStyle(fontSize: 11),
                           ),
-                          backgroundColor: Colors.orange[100],
+                          backgroundColor: colorScheme.tertiaryContainer,
                           padding: EdgeInsets.zero,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
@@ -146,14 +147,14 @@ class FriendCard extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.chat_bubble_outline),
-                    color: Colors.purple[400],
+                    color: colorScheme.primary,
                     onPressed: () {
                       Navigator.pushNamed(context, '/chat', arguments: friend);
                     },
                   ),
                   IconButton(
                     icon: const Icon(Icons.person_add),
-                    color: Colors.orange[400],
+                    color: colorScheme.tertiary,
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

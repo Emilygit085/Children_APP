@@ -47,6 +47,7 @@ class _ScreenTimeBannerState extends State<ScreenTimeBanner> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final usedMinutes = _state.used.inMinutes;
     final limitMinutes = _state.limit.inMinutes;
     final remaining =
@@ -61,12 +62,12 @@ class _ScreenTimeBannerState extends State<ScreenTimeBanner> {
         borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
           colors: reached
-              ? [Colors.red[300]!, Colors.deepOrange[400]!]
-              : [Colors.purple[200]!, Colors.blue[300]!],
+              ? [colorScheme.errorContainer, colorScheme.error]
+              : [colorScheme.primary, colorScheme.tertiary],
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: colorScheme.shadow.withOpacity(0.06),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -77,12 +78,12 @@ class _ScreenTimeBannerState extends State<ScreenTimeBanner> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.9),
+              color: colorScheme.surface.withOpacity(0.9),
               shape: BoxShape.circle,
             ),
             child: Icon(
               reached ? Icons.health_and_safety : Icons.watch_later,
-              color: reached ? Colors.red[400] : Colors.purple[400],
+              color: reached ? colorScheme.error : colorScheme.primary,
               size: 24,
             ),
           ),
@@ -91,12 +92,14 @@ class _ScreenTimeBannerState extends State<ScreenTimeBanner> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   '健康使用手机',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: reached
+                        ? colorScheme.onErrorContainer
+                        : colorScheme.onPrimary,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -104,9 +107,11 @@ class _ScreenTimeBannerState extends State<ScreenTimeBanner> {
                   reached
                       ? '今天已经达到 $limitMinutes 分钟的使用上限，休息一下眼睛吧～'
                       : '今天已使用 $usedMinutes 分钟 · 剩余 $remaining 分钟（每日上限 $limitMinutes 分钟）',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: Colors.white,
+                    color: reached
+                        ? colorScheme.onErrorContainer
+                        : colorScheme.onPrimary,
                   ),
                 ),
               ],
