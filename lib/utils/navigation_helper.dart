@@ -103,11 +103,12 @@ class NavigationHelper {
     int currentIndex, {
     Color? selectedColor,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     final items =
         CurrentUser.isParent ? parentTabItems : childTabItems;
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      selectedItemColor: selectedColor ?? Colors.purple[400],
+      selectedItemColor: selectedColor ?? colorScheme.primary,
       type: BottomNavigationBarType.fixed,
       items: items,
       onTap: (index) => goToTab(context, index),
