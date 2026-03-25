@@ -6,7 +6,7 @@ import '../widgets/screen_time_banner.dart';
 import '../utils/navigation_helper.dart';
 
 class ActivityPage extends StatefulWidget {
-  ActivityPage({super.key});
+  const ActivityPage({super.key});
 
   @override
   State<ActivityPage> createState() => _ActivityPageState();
@@ -80,24 +80,26 @@ class _ActivityPageState extends State<ActivityPage> {
     }
   }
 
-  Color? _statusColor(ApprovalStatus? status) {
+  Color _statusColor(BuildContext context, ApprovalStatus? status) {
+    final colorScheme = Theme.of(context).colorScheme;
     if (status == null) {
-      return Colors.grey[600];
+      return colorScheme.onSurfaceVariant;
     }
     switch (status) {
       case ApprovalStatus.pending:
-        return Colors.orange[700];
+        return colorScheme.secondary;
       case ApprovalStatus.approved:
-        return Colors.green[700];
+        return colorScheme.tertiary;
       case ApprovalStatus.rejected:
-        return Colors.red[700];
+        return colorScheme.error;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.green[50],
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         title: const Text(
           '活动广场',
@@ -106,8 +108,7 @@ class _ActivityPageState extends State<ActivityPage> {
             fontSize: 24,
           ),
         ),
-        backgroundColor: Colors.orange[400],
-        elevation: 0,
+        backgroundColor: colorScheme.surface,
         actions: [
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
@@ -131,7 +132,7 @@ class _ActivityPageState extends State<ActivityPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            elevation: 4,
+            elevation: 0,
             child: InkWell(
               onTap: () {
                 // 可以跳转到活动详情页
@@ -158,7 +159,7 @@ class _ActivityPageState extends State<ActivityPage> {
                       children: [
                         CircleAvatar(
                           radius: 25,
-                          backgroundColor: Colors.orange[200],
+                          backgroundColor: colorScheme.secondaryContainer,
                           backgroundImage: AssetImage(activity
                               .organizerAvatar), // use asset instead of networkImage()
                         ),
@@ -177,7 +178,7 @@ class _ActivityPageState extends State<ActivityPage> {
                               Text(
                                 '发起了活动',
                                 style: TextStyle(
-                                  color: Colors.grey[600],
+                                  color: colorScheme.onSurfaceVariant,
                                   fontSize: 12,
                                 ),
                               ),
@@ -190,13 +191,13 @@ class _ActivityPageState extends State<ActivityPage> {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.orange[100],
+                            color: colorScheme.tertiaryContainer,
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Text(
                             activity.interest,
                             style: TextStyle(
-                              color: Colors.orange[800],
+                              color: colorScheme.onTertiaryContainer,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -215,7 +216,7 @@ class _ActivityPageState extends State<ActivityPage> {
                     Text(
                       activity.description,
                       style: TextStyle(
-                        color: Colors.grey[700],
+                        color: colorScheme.onSurfaceVariant,
                         fontSize: 14,
                       ),
                     ),
@@ -223,19 +224,19 @@ class _ActivityPageState extends State<ActivityPage> {
                     Row(
                       children: [
                         Icon(Icons.calendar_today,
-                            size: 16, color: Colors.grey[600]),
+                            size: 16, color: colorScheme.onSurfaceVariant),
                         const SizedBox(width: 4),
                         Text(
                           '${activity.date} ${activity.time}',
-                          style: TextStyle(color: Colors.grey[700]),
+                          style: TextStyle(color: colorScheme.onSurfaceVariant),
                         ),
                         const SizedBox(width: 16),
                         Icon(Icons.location_on,
-                            size: 16, color: Colors.grey[600]),
+                            size: 16, color: colorScheme.onSurfaceVariant),
                         const SizedBox(width: 4),
                         Text(
                           activity.location,
-                          style: TextStyle(color: Colors.grey[700]),
+                          style: TextStyle(color: colorScheme.onSurfaceVariant),
                         ),
                       ],
                     ),
@@ -243,7 +244,7 @@ class _ActivityPageState extends State<ActivityPage> {
                     Text(
                       _buildStatusText(status),
                       style: TextStyle(
-                        color: _statusColor(status),
+                        color: _statusColor(context, status),
                         fontSize: 13,
                         fontWeight: status == null
                             ? FontWeight.normal
@@ -257,7 +258,7 @@ class _ActivityPageState extends State<ActivityPage> {
                         Text(
                           '${activity.currentParticipants}/${activity.maxParticipants} 人参加',
                           style: TextStyle(
-                            color: Colors.grey[600],
+                            color: colorScheme.onSurfaceVariant,
                             fontSize: 14,
                           ),
                         ),
@@ -277,14 +278,15 @@ class _ActivityPageState extends State<ActivityPage> {
                                 }
                               : null,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange[400],
+                            backgroundColor: colorScheme.primary,
+                            foregroundColor: colorScheme.onPrimary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                           child: Text(
                             _buildButtonText(activity, status),
-                            style: const TextStyle(color: Colors.white),
+                            style: TextStyle(color: colorScheme.onPrimary),
                           ),
                         ),
                       ],
@@ -299,7 +301,7 @@ class _ActivityPageState extends State<ActivityPage> {
       bottomNavigationBar: NavigationHelper.buildBottomNav(
         context,
         2,
-        selectedColor: Colors.orange[400],
+        selectedColor: colorScheme.primary,
       ),
     );
   }

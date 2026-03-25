@@ -50,8 +50,9 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.yellow[50],
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         title: const Text(
           '发起活动',
@@ -60,8 +61,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
             fontSize: 24,
           ),
         ),
-        backgroundColor: Colors.orange[400],
-        elevation: 0,
+        backgroundColor: colorScheme.surface,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -74,7 +74,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.orange[800],
+                color: colorScheme.onBackground,
               ),
             ),
             const SizedBox(height: 8),
@@ -86,7 +86,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: colorScheme.surface,
               ),
             ),
             const SizedBox(height: 16),
@@ -96,7 +96,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.orange[800],
+                color: colorScheme.onBackground,
               ),
             ),
             const SizedBox(height: 8),
@@ -109,7 +109,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: colorScheme.surface,
               ),
             ),
             const SizedBox(height: 16),
@@ -119,7 +119,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.orange[800],
+                color: colorScheme.onBackground,
               ),
             ),
             const SizedBox(height: 8),
@@ -135,8 +135,8 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
                       _selectedInterest = interest;
                     });
                   },
-                  selectedColor: Colors.orange[300],
-                  backgroundColor: Colors.white,
+                  selectedColor: colorScheme.secondaryContainer,
+                  backgroundColor: colorScheme.surface,
                 );
               }).toList(),
             ),
@@ -147,7 +147,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.orange[800],
+                color: colorScheme.onBackground,
               ),
             ),
             const SizedBox(height: 8),
@@ -159,7 +159,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: colorScheme.surface,
                 suffixIcon: const Icon(Icons.calendar_today),
               ),
             ),
@@ -170,7 +170,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.orange[800],
+                color: colorScheme.onBackground,
               ),
             ),
             const SizedBox(height: 8),
@@ -182,7 +182,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: colorScheme.surface,
                 suffixIcon: const Icon(Icons.access_time),
               ),
             ),
@@ -193,7 +193,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.orange[800],
+                color: colorScheme.onBackground,
               ),
             ),
             const SizedBox(height: 8),
@@ -205,7 +205,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: colorScheme.surface,
                 suffixIcon: const Icon(Icons.location_on),
               ),
             ),
@@ -216,7 +216,7 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.orange[800],
+                color: colorScheme.onBackground,
               ),
             ),
             const SizedBox(height: 8),
@@ -259,18 +259,19 @@ class _CreateActivityPageState extends State<CreateActivityPage> {
               child: ElevatedButton(
                 onPressed: _handleSubmit,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange[400],
+                  backgroundColor: colorScheme.primary,
+                  foregroundColor: colorScheme.onPrimary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(28),
                   ),
-                  elevation: 4,
+                  elevation: 0,
                 ),
-                child: const Text(
+                child: Text(
                   '发起活动',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: colorScheme.onPrimary,
                   ),
                 ),
               ),

@@ -70,10 +70,11 @@ class _BindingCodePageState extends State<BindingCodePage> {
         _generatedCode = bindCode;
       });
     } catch (e) {
+      final colorScheme = Theme.of(context).colorScheme;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('生成绑定码失败：${e.toString()}'),
-          backgroundColor: Colors.red,
+          backgroundColor: colorScheme.error,
         ),
       );
     } finally {
@@ -87,10 +88,11 @@ class _BindingCodePageState extends State<BindingCodePage> {
   Future<void> _bindWithCode() async {
     final code = _codeController.text.trim();
     if (code.length != 6) {
+      final colorScheme = Theme.of(context).colorScheme;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('请输入6位绑定码'),
-          backgroundColor: Colors.orange,
+        SnackBar(
+          content: const Text('请输入6位绑定码'),
+          backgroundColor: colorScheme.secondary,
         ),
       );
       return;
@@ -119,9 +121,9 @@ class _BindingCodePageState extends State<BindingCodePage> {
         }
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('绑定成功！'),
-            backgroundColor: Colors.green,
+          SnackBar(
+            content: const Text('绑定成功！'),
+            backgroundColor: Theme.of(context).colorScheme.tertiary,
           ),
         );
         Navigator.pop(context);
@@ -138,10 +140,11 @@ class _BindingCodePageState extends State<BindingCodePage> {
   }
 
   void _showError(String message) {
+    final colorScheme = Theme.of(context).colorScheme;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.red,
+        backgroundColor: colorScheme.error,
       ),
     );
   }
@@ -149,11 +152,12 @@ class _BindingCodePageState extends State<BindingCodePage> {
   /// 复制绑定码
   void _copyCode() {
     if (_generatedCode != null) {
+      final colorScheme = Theme.of(context).colorScheme;
       Clipboard.setData(ClipboardData(text: _generatedCode!));
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('已复制到剪贴板'),
-          backgroundColor: Colors.green,
+        SnackBar(
+          content: const Text('已复制到剪贴板'),
+          backgroundColor: colorScheme.tertiary,
         ),
       );
     }
@@ -161,19 +165,24 @@ class _BindingCodePageState extends State<BindingCodePage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final rolePrimary = widget.isParent ? colorScheme.tertiary : colorScheme.primary;
+    final roleOnPrimary = widget.isParent ? colorScheme.onTertiary : colorScheme.onPrimary;
+    final roleContainer =
+        widget.isParent ? colorScheme.tertiaryContainer : colorScheme.primaryContainer;
+    final roleOnContainer = widget.isParent
+        ? colorScheme.onTertiaryContainer
+        : colorScheme.onPrimaryContainer;
+
     return Scaffold(
-      backgroundColor: widget.isParent ? Colors.orange[50] : Colors.purple[50],
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         title: Text(
           widget.isParent ? '生成绑定码' : '输入绑定码',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
+          style: textTheme.headlineSmall,
         ),
-        backgroundColor:
-            widget.isParent ? Colors.orange[400] : Colors.purple[400],
-        elevation: 0,
+        backgroundColor: colorScheme.surface,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -185,13 +194,13 @@ class _BindingCodePageState extends State<BindingCodePage> {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 1,
-                      blurRadius: 8,
+                      color: colorScheme.shadow.withOpacity(0.06),
+                      blurRadius: 16,
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
@@ -199,9 +208,7 @@ class _BindingCodePageState extends State<BindingCodePage> {
                   children: [
                     Icon(
                       widget.isParent ? Icons.info_outline : Icons.qr_code,
-                      color: widget.isParent
-                          ? Colors.orange[700]
-                          : Colors.purple[700],
+                      color: roleOnContainer,
                       size: 28,
                     ),
                     const SizedBox(width: 12),
@@ -212,7 +219,7 @@ class _BindingCodePageState extends State<BindingCodePage> {
                             : '请输入家长提供的6位绑定码',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey[700],
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ),
@@ -229,11 +236,12 @@ class _BindingCodePageState extends State<BindingCodePage> {
                     child: ElevatedButton(
                       onPressed: _generateCode,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange[400],
+                        backgroundColor: rolePrimary,
+                        foregroundColor: roleOnPrimary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(28),
                         ),
-                        elevation: 4,
+                        elevation: 0,
                       ),
                       child: const Text(
                         '生成绑定码',
@@ -254,7 +262,7 @@ class _BindingCodePageState extends State<BindingCodePage> {
                           '您的绑定码',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.grey[700],
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -264,10 +272,10 @@ class _BindingCodePageState extends State<BindingCodePage> {
                             vertical: 24,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.orange[100],
+                            color: roleContainer,
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: Colors.orange[400]!,
+                              color: rolePrimary,
                               width: 3,
                             ),
                           ),
@@ -276,7 +284,7 @@ class _BindingCodePageState extends State<BindingCodePage> {
                             style: TextStyle(
                               fontSize: 48,
                               fontWeight: FontWeight.bold,
-                              color: Colors.orange[900],
+                              color: roleOnContainer,
                               letterSpacing: 8,
                             ),
                           ),
@@ -290,8 +298,8 @@ class _BindingCodePageState extends State<BindingCodePage> {
                               icon: const Icon(Icons.copy),
                               label: const Text('复制'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.orange[400],
-                                foregroundColor: Colors.white,
+                                backgroundColor: rolePrimary,
+                                foregroundColor: roleOnPrimary,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 24,
                                   vertical: 12,
@@ -307,8 +315,8 @@ class _BindingCodePageState extends State<BindingCodePage> {
                               icon: const Icon(Icons.refresh),
                               label: const Text('重新生成'),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.grey[300],
-                                foregroundColor: Colors.grey[800],
+                                backgroundColor: colorScheme.surfaceVariant,
+                                foregroundColor: colorScheme.onSurfaceVariant,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 24,
                                   vertical: 12,
@@ -325,7 +333,7 @@ class _BindingCodePageState extends State<BindingCodePage> {
                           '绑定码24小时内有效',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey[600],
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ],
@@ -339,7 +347,7 @@ class _BindingCodePageState extends State<BindingCodePage> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.purple[700],
+                    color: colorScheme.onBackground,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -357,32 +365,32 @@ class _BindingCodePageState extends State<BindingCodePage> {
                     hintText: '000000',
                     hintStyle: TextStyle(
                       fontSize: 32,
-                      color: Colors.grey[300],
+                      color: colorScheme.onSurface.withOpacity(0.24),
                       letterSpacing: 8,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                       borderSide: BorderSide(
-                        color: Colors.purple[400]!,
+                        color: colorScheme.primary,
                         width: 3,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                       borderSide: BorderSide(
-                        color: Colors.purple[300]!,
+                        color: colorScheme.outline,
                         width: 3,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                       borderSide: BorderSide(
-                        color: Colors.purple[400]!,
+                        color: colorScheme.primary,
                         width: 3,
                       ),
                     ),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: colorScheme.surface,
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 20,
@@ -396,20 +404,27 @@ class _BindingCodePageState extends State<BindingCodePage> {
                   child: ElevatedButton(
                     onPressed: _isLoading ? null : _bindWithCode,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple[400],
+                      backgroundColor: rolePrimary,
+                      foregroundColor: roleOnPrimary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28),
                       ),
-                      elevation: 4,
+                      elevation: 0,
                     ),
                     child: _isLoading
-                        ? const CircularProgressIndicator(color: Colors.white)
+                        ? SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.4,
+                              color: roleOnPrimary,
+                            ),
+                          )
                         : const Text(
                             '确认绑定',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
                             ),
                           ),
                   ),

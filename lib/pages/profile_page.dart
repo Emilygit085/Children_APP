@@ -10,6 +10,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     // 如果传入了用户参数，显示该用户信息；否则显示当前用户信息
     final User? user = ModalRoute.of(context)?.settings.arguments as User?;
     final User? currentUser = CurrentUser.user;
@@ -28,17 +30,13 @@ class ProfilePage extends StatelessWidget {
     final bool isCurrentUser = user == null;
 
     return Scaffold(
-      backgroundColor: Colors.purple[50],
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         title: Text(
           isCurrentUser ? '我的主页' : displayUser.name,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
+          style: textTheme.headlineSmall,
         ),
-        backgroundColor: Colors.purple[400],
-        elevation: 0,
+        backgroundColor: colorScheme.surface,
         leading: isCurrentUser
             ? null
             : IconButton(
@@ -65,7 +63,7 @@ class ProfilePage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.purple[400],
+                color: colorScheme.primaryContainer,
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
@@ -75,10 +73,10 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 60,
-                    backgroundColor: Colors.white,
+                    backgroundColor: colorScheme.surface,
                     child: CircleAvatar(
                       radius: 55,
-                      backgroundColor: Colors.purple[200],
+                      backgroundColor: colorScheme.secondaryContainer,
                       backgroundImage: AssetImage(
                           displayUser.avatar), // asset instead of network
                     ),
@@ -86,34 +84,33 @@ class ProfilePage extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     displayUser.name,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: colorScheme.onPrimaryContainer,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.cake, color: Colors.white70, size: 18),
+                      Icon(Icons.cake, color: colorScheme.onSurfaceVariant, size: 18),
                       const SizedBox(width: 4),
                       Text(
                         '${displayUser.age}岁',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white70,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                       const SizedBox(width: 16),
-                      const Icon(Icons.location_on,
-                          color: Colors.white70, size: 18),
+                      Icon(Icons.location_on, color: colorScheme.onSurfaceVariant, size: 18),
                       const SizedBox(width: 4),
                       Text(
                         displayUser.location,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white70,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -132,7 +129,7 @@ class ProfilePage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.purple[700],
+                      color: colorScheme.onBackground,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -146,13 +143,13 @@ class ProfilePage extends StatelessWidget {
                           vertical: 12,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.orange[200],
+                          color: colorScheme.tertiaryContainer,
                           borderRadius: BorderRadius.circular(24),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 1,
-                              blurRadius: 4,
+                              color: colorScheme.shadow.withOpacity(0.06),
+                              blurRadius: 10,
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -161,7 +158,7 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.orange[900],
+                            color: colorScheme.onTertiaryContainer,
                           ),
                         ),
                       );
@@ -184,7 +181,7 @@ class ProfilePage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.purple[700],
+                      color: colorScheme.onBackground,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -198,13 +195,13 @@ class ProfilePage extends StatelessWidget {
                           vertical: 12,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.blue[200],
+                          color: colorScheme.secondaryContainer,
                           borderRadius: BorderRadius.circular(24),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 1,
-                              blurRadius: 4,
+                              color: colorScheme.shadow.withOpacity(0.06),
+                              blurRadius: 10,
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
@@ -213,7 +210,7 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue[900],
+                            color: colorScheme.onSecondaryContainer,
                           ),
                         ),
                       );
@@ -237,8 +234,8 @@ class ProfilePage extends StatelessWidget {
                         icon: const Icon(Icons.chat),
                         label: const Text('发送消息'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purple[400],
-                          foregroundColor: Colors.white,
+                          backgroundColor: colorScheme.primary,
+                          foregroundColor: colorScheme.onPrimary,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -257,8 +254,8 @@ class ProfilePage extends StatelessWidget {
                         icon: const Icon(Icons.person_add),
                         label: const Text('添加好友'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.orange[400],
-                          foregroundColor: Colors.white,
+                          backgroundColor: colorScheme.tertiary,
+                          foregroundColor: colorScheme.onTertiary,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -279,7 +276,7 @@ class ProfilePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: ListTile(
-                  leading: const Icon(Icons.favorite, color: Colors.red),
+                  leading: Icon(Icons.favorite, color: colorScheme.error),
                   title: const Text('我的活动'),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
@@ -294,7 +291,7 @@ class ProfilePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: ListTile(
-                  leading: const Icon(Icons.people, color: Colors.blue),
+                  leading: Icon(Icons.people, color: colorScheme.primary),
                   title: const Text('我的好友'),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
@@ -322,7 +319,7 @@ class ProfilePage extends StatelessWidget {
                       child: ListTile(
                         leading: Icon(
                           isBound ? Icons.check_circle : Icons.link_off,
-                          color: isBound ? Colors.green : Colors.orange,
+                          color: isBound ? colorScheme.tertiary : colorScheme.secondary,
                         ),
                         title: Text(isBound ? '已绑定家长' : '未绑定家长'),
                         subtitle: Text(
@@ -359,8 +356,7 @@ class ProfilePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: ListTile(
-                      leading: const Icon(Icons.family_restroom,
-                          color: Colors.green),
+                      leading: Icon(Icons.family_restroom, color: colorScheme.tertiary),
                       title: const Text('家长设置'),
                       trailing: const Icon(Icons.arrow_forward_ios),
                       onTap: () {
@@ -378,7 +374,7 @@ class ProfilePage extends StatelessWidget {
           ? NavigationHelper.buildBottomNav(
               context,
               NavigationHelper.profileTabIndex,
-              selectedColor: Colors.purple[400],
+              selectedColor: colorScheme.primary,
             )
           : null,
     );

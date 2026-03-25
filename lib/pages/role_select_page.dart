@@ -16,8 +16,9 @@ class RoleSelectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.purple[50],
+      backgroundColor: colorScheme.background,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -30,9 +31,9 @@ class RoleSelectPage extends StatelessWidget {
                   width: 120,
                   height: 120,
                   decoration: BoxDecoration(
-                    color: Colors.purple[300],
+                    color: colorScheme.primaryContainer,
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.purple, width: 4),
+                    border: Border.all(color: colorScheme.primary, width: 3),
                   ),
                   child: const Icon(
                     Icons.family_restroom,
@@ -47,7 +48,7 @@ class RoleSelectPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.purple[700],
+                    color: colorScheme.onBackground,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -55,7 +56,7 @@ class RoleSelectPage extends StatelessWidget {
                   '请选择您的身份类型',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.grey[600],
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 48),
@@ -64,7 +65,7 @@ class RoleSelectPage extends StatelessWidget {
                   context,
                   title: '👨‍👩‍👧 我是家长',
                   description: '管理孩子的社交活动\n审批活动申请',
-                  color: Colors.orange[400]!,
+                  color: colorScheme.tertiary,
                   onTap: () => _selectRole(context, UserRole.parent),
                 ),
                 const SizedBox(height: 24),
@@ -73,7 +74,7 @@ class RoleSelectPage extends StatelessWidget {
                   context,
                   title: '👶 我是小朋友',
                   description: '寻找小伙伴\n参加有趣的活动',
-                  color: Colors.purple[400]!,
+                  color: colorScheme.primary,
                   onTap: () => _selectRole(context, UserRole.child),
                 ),
               ],
@@ -97,13 +98,12 @@ class RoleSelectPage extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(color: color, width: 3),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.3),
-              spreadRadius: 2,
+              color: color.withOpacity(0.14),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -125,7 +125,7 @@ class RoleSelectPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.grey[700],
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 height: 1.5,
               ),
             ),

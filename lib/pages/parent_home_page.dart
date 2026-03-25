@@ -24,9 +24,10 @@ class ParentHomePage extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context, int boundChildrenCount) {
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: Colors.purple[50],
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         title: const Text(
           '家长端',
@@ -35,8 +36,7 @@ class ParentHomePage extends StatelessWidget {
             fontSize: 24,
           ),
         ),
-        backgroundColor: Colors.purple[400],
-        elevation: 0,
+        backgroundColor: colorScheme.surface,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -47,7 +47,7 @@ class ParentHomePage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
-              elevation: 4,
+              elevation: 0,
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Row(
@@ -55,12 +55,12 @@ class ParentHomePage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.green[100],
+                        color: colorScheme.tertiaryContainer,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.family_restroom,
-                        color: Colors.green[700],
+                        color: colorScheme.onTertiaryContainer,
                         size: 28,
                       ),
                     ),
@@ -81,7 +81,7 @@ class ParentHomePage extends StatelessWidget {
                             '家长账号管理',
                             style: TextStyle(
                               fontSize: 14,
-                              color: Colors.grey[700],
+                              color: colorScheme.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -96,7 +96,7 @@ class ParentHomePage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
-              elevation: 4,
+              elevation: 0,
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Row(
@@ -104,12 +104,12 @@ class ParentHomePage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.orange[100],
+                        color: colorScheme.secondaryContainer,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.notifications_active,
-                        color: Colors.orange[800],
+                        color: colorScheme.onSecondaryContainer,
                         size: 28,
                       ),
                     ),
@@ -135,7 +135,7 @@ class ParentHomePage extends StatelessWidget {
                                     : '暂无新的活动加入申请',
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey[700],
+                                  color: colorScheme.onSurfaceVariant,
                                 ),
                               );
                             },
@@ -154,16 +154,16 @@ class ParentHomePage extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: pendingCount > 0
-                                ? Colors.red[400]
-                                : Colors.grey[300],
+                                ? colorScheme.error
+                                : colorScheme.surfaceVariant,
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Text(
                             '$pendingCount',
                             style: TextStyle(
                               color: pendingCount > 0
-                                  ? Colors.white
-                                  : Colors.grey[700],
+                                  ? colorScheme.onError
+                                  : colorScheme.onSurfaceVariant,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -180,7 +180,7 @@ class ParentHomePage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
-              elevation: 4,
+              elevation: 0,
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -190,7 +190,7 @@ class ParentHomePage extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.link,
-                          color: Colors.blue[700],
+                          color: colorScheme.primary,
                           size: 28,
                         ),
                         const SizedBox(width: 12),
@@ -208,7 +208,7 @@ class ParentHomePage extends StatelessWidget {
                       '已绑定 $boundChildrenCount 个儿童账号',
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.grey[700],
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -225,8 +225,8 @@ class ParentHomePage extends StatelessWidget {
                         icon: const Icon(Icons.qr_code),
                         label: const Text('生成绑定码'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue[400],
-                          foregroundColor: Colors.white,
+                          backgroundColor: colorScheme.primary,
+                          foregroundColor: colorScheme.onPrimary,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -244,7 +244,7 @@ class ParentHomePage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.purple[700],
+                color: colorScheme.onBackground,
               ),
             ),
             const SizedBox(height: 12),
@@ -261,8 +261,8 @@ class ParentHomePage extends StatelessWidget {
                     icon: const Icon(Icons.rule),
                     label: const Text('活动审批'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange[400],
-                      foregroundColor: Colors.white,
+                      backgroundColor: colorScheme.tertiary,
+                      foregroundColor: colorScheme.onTertiary,
                       padding: const EdgeInsets.symmetric(
                         vertical: 16,
                       ),
@@ -281,8 +281,8 @@ class ParentHomePage extends StatelessWidget {
                     icon: const Icon(Icons.shield),
                     label: const Text('安全功能'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple[400],
-                      foregroundColor: Colors.white,
+                      backgroundColor: colorScheme.primary,
+                      foregroundColor: colorScheme.onPrimary,
                       padding: const EdgeInsets.symmetric(
                         vertical: 16,
                       ),
@@ -300,7 +300,7 @@ class ParentHomePage extends StatelessWidget {
       bottomNavigationBar: NavigationHelper.buildBottomNav(
         context,
         3,
-        selectedColor: Colors.orange[400],
+        selectedColor: colorScheme.primary,
       ),
     );
   }

@@ -13,6 +13,7 @@ class ApprovalListPage extends StatefulWidget {
 class _ApprovalListPageState extends State<ApprovalListPage> {
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     // 家长专属：非家长禁止访问
     if (!CurrentUser.isParent) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -36,7 +37,7 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
         .toList();
 
     return Scaffold(
-      backgroundColor: Colors.orange[50],
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         title: const Text(
           '活动审批',
@@ -45,19 +46,18 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
             fontSize: 24,
           ),
         ),
-        backgroundColor: Colors.orange[400],
-        elevation: 0,
+        backgroundColor: colorScheme.surface,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _buildSectionTitle('待审批', Icons.pending_actions, Colors.orange[700]!),
+          _buildSectionTitle(context, '待审批', Icons.pending_actions, colorScheme.secondary),
           if (pendingRequests.isEmpty)
             _buildEmptyHint('当前没有待审批的活动申请')
           else
             ...pendingRequests.map((r) => _buildRequestCard(r, isPending: true)),
           const SizedBox(height: 24),
-          _buildSectionTitle('已处理', Icons.check_circle, Colors.green[700]!),
+          _buildSectionTitle(context, '已处理', Icons.check_circle, colorScheme.tertiary),
           if (processedRequests.isEmpty)
             _buildEmptyHint('还没有已处理的申请')
           else
@@ -67,7 +67,7 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
     );
   }
 
-  Widget _buildSectionTitle(String title, IconData icon, Color color) {
+  Widget _buildSectionTitle(BuildContext context, String title, IconData icon, Color color) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -92,22 +92,22 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey[300]!),
+        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
       ),
       child: Row(
         children: [
           Icon(
             Icons.info_outline,
-            color: Colors.grey[600],
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
               style: TextStyle(
-                color: Colors.grey[700],
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
           ),
@@ -120,13 +120,13 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
     final Color statusColor;
     switch (request.status) {
       case ApprovalStatus.pending:
-        statusColor = Colors.orange[700]!;
+        statusColor = Theme.of(context).colorScheme.secondary;
         break;
       case ApprovalStatus.approved:
-        statusColor = Colors.green[700]!;
+        statusColor = Theme.of(context).colorScheme.tertiary;
         break;
       case ApprovalStatus.rejected:
-        statusColor = Colors.red[700]!;
+        statusColor = Theme.of(context).colorScheme.error;
         break;
     }
 
@@ -135,7 +135,7 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      elevation: 3,
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -146,12 +146,12 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.orange[100],
+                    color: Theme.of(context).colorScheme.secondaryContainer,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.event,
-                    color: Colors.orange,
+                    color: Theme.of(context).colorScheme.onSecondaryContainer,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -171,7 +171,7 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
                         '申请人：${request.childName}（演示儿童账号）',
                         style: TextStyle(
                           fontSize: 13,
-                          color: Colors.grey[700],
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -202,7 +202,7 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
               '申请时间：${request.createdAt}',
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.grey[600],
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             if (isPending) ...[
@@ -219,9 +219,9 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
                         const SnackBar(content: Text('已拒绝该活动申请')),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       '拒绝',
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(color: Theme.of(context).colorScheme.error),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -235,8 +235,8 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[400],
-                      foregroundColor: Colors.white,
+                      backgroundColor: Theme.of(context).colorScheme.tertiary,
+                      foregroundColor: Theme.of(context).colorScheme.onTertiary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),

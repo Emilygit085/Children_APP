@@ -162,8 +162,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.blue[50],
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         title: const Text(
           '我的好友',
@@ -172,8 +173,7 @@ class HomePage extends StatelessWidget {
             fontSize: 24,
           ),
         ),
-        backgroundColor: Colors.purple[400],
-        elevation: 0,
+        backgroundColor: colorScheme.surface,
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -211,7 +211,7 @@ class HomePage extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Colors.purple[700],
+                              color: colorScheme.onBackground,
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -221,7 +221,7 @@ class HomePage extends StatelessWidget {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.orange[200],
+                              color: colorScheme.tertiaryContainer,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
@@ -229,7 +229,7 @@ class HomePage extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.orange[800],
+                                color: colorScheme.onTertiaryContainer,
                               ),
                             ),
                           ),
@@ -257,7 +257,7 @@ class HomePage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.purple[700],
+                  color: colorScheme.onBackground,
                 ),
               ),
             ),
@@ -273,11 +273,11 @@ class HomePage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  elevation: 2,
+                  elevation: 0,
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 30,
-                      backgroundColor: Colors.purple[200],
+                      backgroundColor: colorScheme.secondaryContainer,
                       backgroundImage:
                           AssetImage(friend.avatar), // asset instead of network
                     ),
@@ -298,7 +298,7 @@ class HomePage extends StatelessWidget {
                           children: friend.interests.map((interest) {
                             return Chip(
                               label: Text(interest),
-                              backgroundColor: Colors.orange[100],
+                              backgroundColor: colorScheme.tertiaryContainer,
                               labelStyle: const TextStyle(fontSize: 12),
                             );
                           }).toList(),
@@ -307,7 +307,7 @@ class HomePage extends StatelessWidget {
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.chat_bubble_outline),
-                      color: Colors.purple[400],
+                      color: colorScheme.primary,
                       onPressed: () {
                         Navigator.pushNamed(context, '/chat',
                             arguments: friend);

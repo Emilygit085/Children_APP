@@ -198,10 +198,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _showError(String message) {
+    final colorScheme = Theme.of(context).colorScheme;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.red,
+        backgroundColor: colorScheme.error,
       ),
     );
   }
@@ -216,8 +217,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.pink[50],
+      backgroundColor: colorScheme.background,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -230,9 +232,9 @@ class _LoginPageState extends State<LoginPage> {
                   width: 120,
                   height: 120,
                   decoration: BoxDecoration(
-                    color: Colors.orange[300],
+                    color: colorScheme.secondaryContainer,
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.orange, width: 4),
+                    border: Border.all(color: colorScheme.secondary, width: 3),
                   ),
                   child: const Icon(
                     Icons.child_care,
@@ -247,7 +249,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.purple[700],
+                    color: colorScheme.onBackground,
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -258,8 +260,8 @@ class _LoginPageState extends State<LoginPage> {
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
                       color: _selectedRole == UserRole.parent
-                          ? Colors.orange[100]
-                          : Colors.purple[100],
+                          ? colorScheme.tertiaryContainer
+                          : colorScheme.primaryContainer,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
@@ -270,8 +272,8 @@ class _LoginPageState extends State<LoginPage> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: _selectedRole == UserRole.parent
-                            ? Colors.orange[800]
-                            : Colors.purple[800],
+                            ? colorScheme.onTertiaryContainer
+                            : colorScheme.onPrimaryContainer,
                       ),
                     ),
                   ),
@@ -286,13 +288,12 @@ class _LoginPageState extends State<LoginPage> {
                 // 输入框
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: colorScheme.surface,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 8,
+                        color: colorScheme.shadow.withOpacity(0.08),
+                        blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
                     ],
@@ -302,26 +303,25 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       hintText: '用户名',
                       prefixIcon:
-                          const Icon(Icons.person, color: Colors.purple),
+                          Icon(Icons.person, color: colorScheme.primary),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide.none,
                       ),
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: colorScheme.surface,
                     ),
                   ),
                 ),
                 const SizedBox(height: 16),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: colorScheme.surface,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 8,
+                        color: colorScheme.shadow.withOpacity(0.08),
+                        blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
                     ],
@@ -331,13 +331,13 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: '密码',
-                      prefixIcon: const Icon(Icons.lock, color: Colors.purple),
+                      prefixIcon: Icon(Icons.lock, color: colorScheme.primary),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide.none,
                       ),
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: colorScheme.surface,
                     ),
                   ),
                 ),
@@ -346,13 +346,12 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 16),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: colorScheme.surface,
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 8,
+                          color: colorScheme.shadow.withOpacity(0.08),
+                          blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
                       ],
@@ -363,13 +362,13 @@ class _LoginPageState extends State<LoginPage> {
                         hintText:
                             _selectedRole == UserRole.parent ? '家长姓名' : '儿童姓名',
                         prefixIcon:
-                            const Icon(Icons.badge, color: Colors.purple),
+                            Icon(Icons.badge, color: colorScheme.primary),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
                         ),
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: colorScheme.surface,
                       ),
                     ),
                   ),
@@ -377,13 +376,12 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 16),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: colorScheme.surface,
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 2,
-                            blurRadius: 8,
+                            color: colorScheme.shadow.withOpacity(0.08),
+                            blurRadius: 10,
                             offset: const Offset(0, 4),
                           ),
                         ],
@@ -394,13 +392,13 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           hintText: '年龄',
                           prefixIcon:
-                              const Icon(Icons.cake, color: Colors.purple),
+                              Icon(Icons.cake, color: colorScheme.primary),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: colorScheme.surface,
                         ),
                       ),
                     ),
@@ -414,27 +412,28 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton(
                     onPressed: _isLoading ? null : _handleSubmit,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple[400],
+                      backgroundColor: colorScheme.primary,
+                      foregroundColor: colorScheme.onPrimary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28),
                       ),
-                      elevation: 4,
+                      elevation: 0,
                     ),
                     child: _isLoading
-                        ? const SizedBox(
+                        ? SizedBox(
                             width: 24,
                             height: 24,
                             child: CircularProgressIndicator(
-                              color: Colors.white,
+                              color: colorScheme.onPrimary,
                               strokeWidth: 2,
                             ),
                           )
                         : Text(
                             _isLogin ? '登录' : '注册',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: colorScheme.onPrimary,
                             ),
                           ),
                   ),
@@ -451,7 +450,7 @@ class _LoginPageState extends State<LoginPage> {
                     _isLogin ? '还没有账号？立即注册' : '已有账号？立即登录',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.purple[600],
+                      color: colorScheme.primary,
                     ),
                   ),
                 ),

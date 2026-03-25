@@ -141,11 +141,12 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
   }
 
   Future<void> _handleComplete() async {
+    final colorScheme = Theme.of(context).colorScheme;
     if (_selectedInterests.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('请至少选择一个兴趣爱好'),
-          backgroundColor: Colors.orange,
+        SnackBar(
+          content: const Text('请至少选择一个兴趣爱好'),
+          backgroundColor: colorScheme.secondary,
         ),
       );
       return;
@@ -154,9 +155,9 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
     final currentUser = CurrentUser.user;
     if (currentUser == null || !currentUser.isChild) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('用户信息错误'),
-          backgroundColor: Colors.red,
+        SnackBar(
+          content: const Text('用户信息错误'),
+          backgroundColor: colorScheme.error,
         ),
       );
       return;
@@ -175,7 +176,7 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('保存失败：${e.toString()}'),
-          backgroundColor: Colors.red,
+          backgroundColor: colorScheme.error,
         ),
       );
     }
@@ -183,8 +184,9 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.purple[50],
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         title: const Text(
           '选择具体爱好',
@@ -193,8 +195,7 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
             fontSize: 24,
           ),
         ),
-        backgroundColor: Colors.purple[400],
-        elevation: 0,
+        backgroundColor: colorScheme.surface,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -214,10 +215,10 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.orange[100],
+                        color: colorScheme.secondaryContainer,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: Colors.orange[300]!,
+                          color: colorScheme.outline,
                           width: 2,
                         ),
                       ),
@@ -225,7 +226,7 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                         children: [
                           Icon(
                             Icons.info_outline,
-                            color: Colors.orange[800],
+                            color: colorScheme.onSecondaryContainer,
                             size: 28,
                           ),
                           const SizedBox(width: 12),
@@ -234,7 +235,7 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                               '选择你喜欢的具体兴趣爱好！想重新选择大类？点击左上角的返回按钮。',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.orange[900],
+                                color: colorScheme.onSecondaryContainer,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -248,7 +249,7 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Colors.purple[700],
+                        color: colorScheme.onBackground,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -276,13 +277,13 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                                 ),
                                 decoration: BoxDecoration(
                                   color: selected
-                                      ? Colors.purple[400]
-                                      : Colors.white,
+                                      ? colorScheme.primary
+                                      : colorScheme.surface,
                                   borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
                                     color: selected
-                                        ? Colors.purple[600]!
-                                        : Colors.purple[200]!,
+                                        ? colorScheme.primaryContainer
+                                        : colorScheme.outline,
                                     width: 2,
                                   ),
                                 ),
@@ -293,8 +294,8 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       color: selected
-                                          ? Colors.white
-                                          : Colors.purple[700],
+                                          ? colorScheme.onPrimary
+                                          : colorScheme.onSurface,
                                     ),
                                   ),
                                 ),
@@ -342,10 +343,10 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.green[50],
+                          color: colorScheme.tertiaryContainer.withOpacity(0.25),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: Colors.green[300]!,
+                            color: colorScheme.tertiary,
                             width: 2,
                           ),
                         ),
@@ -353,7 +354,7 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                           children: [
                             Icon(
                               Icons.check_circle,
-                              color: Colors.green[700],
+                              color: colorScheme.tertiary,
                               size: 24,
                             ),
                             const SizedBox(width: 12),
@@ -362,7 +363,7 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                                 '已选择 ${_selectedInterests.length} 个兴趣',
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: Colors.green[800],
+                                  color: colorScheme.onTertiaryContainer,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -377,12 +378,11 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: colorScheme.surface,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 1,
-                    blurRadius: 8,
+                    color: colorScheme.shadow.withOpacity(0.06),
+                    blurRadius: 10,
                     offset: const Offset(0, -2),
                   ),
                 ],
@@ -393,18 +393,19 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
                 child: ElevatedButton(
                   onPressed: _handleComplete,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple[400],
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28),
                     ),
-                    elevation: 4,
+                    elevation: 0,
                   ),
-                  child: const Text(
+                  child: Text(
                     '完成',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: colorScheme.onPrimary,
                     ),
                   ),
                 ),
@@ -447,23 +448,28 @@ class _InterestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final colors = selected
-        ? [Colors.purple[400]!, Colors.purple[600]!]
-        : [Colors.orange[200]!, Colors.pink[200]!];
+        ? [colorScheme.primary, colorScheme.primaryContainer]
+        : null;
 
     return Container(
       width: width.clamp(140, 260),
       height: 90,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(
-          colors: colors,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: selected ? null : colorScheme.surfaceVariant,
+        border: selected ? null : Border.all(color: colorScheme.outlineVariant),
+        gradient: selected
+            ? LinearGradient(
+                colors: colors!,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              )
+            : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.25),
+            color: colorScheme.shadow.withOpacity(0.08),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -491,10 +497,10 @@ class _InterestCard extends StatelessWidget {
               label,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: selected ? Colors.white : colorScheme.onSurface,
               ),
             ),
           ),
@@ -506,14 +512,14 @@ class _InterestCard extends StatelessWidget {
                 Icon(
                   selected ? Icons.check_circle : Icons.circle_outlined,
                   size: 18,
-                  color: Colors.white,
+                  color: selected ? Colors.white : colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: 6),
                 Text(
                   categoryName,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: Colors.white,
+                    color: selected ? Colors.white : colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],

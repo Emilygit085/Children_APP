@@ -6,8 +6,9 @@ class ScreenTimeLimitPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.purple[50],
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         title: const Text(
           '休息一下',
@@ -16,8 +17,7 @@ class ScreenTimeLimitPage extends StatelessWidget {
             fontSize: 24,
           ),
         ),
-        backgroundColor: Colors.purple[400],
-        elevation: 0,
+        backgroundColor: colorScheme.surface,
       ),
       body: Center(
         child: Padding(
@@ -25,10 +25,10 @@ class ScreenTimeLimitPage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
+              Icon(
                 Icons.health_and_safety,
                 size: 80,
-                color: Colors.purple,
+                color: colorScheme.primary,
               ),
               const SizedBox(height: 24),
               Text(
@@ -36,7 +36,7 @@ class ScreenTimeLimitPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.purple[700],
+                  color: colorScheme.onBackground,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -45,7 +45,7 @@ class ScreenTimeLimitPage extends StatelessWidget {
                 '让眼睛和大脑都休息一下，去喝口水、看看远方或者活动活动身体吧。',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.grey[700],
+                  color: colorScheme.onSurfaceVariant,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,
@@ -59,7 +59,8 @@ class ScreenTimeLimitPage extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple[400],
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(26),
                     ),
@@ -69,7 +70,6 @@ class ScreenTimeLimitPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
                     ),
                   ),
                 ),

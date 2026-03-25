@@ -26,8 +26,9 @@ class _SafetyPageState extends State<SafetyPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.blue[50],
+      backgroundColor: colorScheme.background,
       appBar: AppBar(
         title: const Text(
           '安全功能演示',
@@ -36,8 +37,7 @@ class _SafetyPageState extends State<SafetyPage> {
             fontSize: 24,
           ),
         ),
-        backgroundColor: Colors.purple[400],
-        elevation: 0,
+        backgroundColor: colorScheme.surface,
       ),
       body: ListView(
         padding: const EdgeInsets.all(24),
@@ -46,7 +46,7 @@ class _SafetyPageState extends State<SafetyPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            elevation: 4,
+            elevation: 0,
             child: SwitchListTile(
               title: const Text(
                 '定位共享（演示用开关）',
@@ -61,11 +61,11 @@ class _SafetyPageState extends State<SafetyPage> {
                     : '当前：未开启，本 Demo 不会展示位置信息。',
                 style: TextStyle(
                   fontSize: 13,
-                  color: Colors.grey[700],
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
               value: _locationSharingEnabled,
-              activeThumbColor: Colors.purple[400],
+              activeThumbColor: colorScheme.primary,
               onChanged: (value) {
                 setState(() {
                   _locationSharingEnabled = value;
@@ -79,7 +79,7 @@ class _SafetyPageState extends State<SafetyPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            elevation: 4,
+            elevation: 0,
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Row(
@@ -87,12 +87,12 @@ class _SafetyPageState extends State<SafetyPage> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.red[100],
+                      color: colorScheme.errorContainer,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       Icons.phone_in_talk,
-                      color: Colors.red[700],
+                      color: colorScheme.onErrorContainer,
                       size: 28,
                     ),
                   ),
@@ -113,7 +113,7 @@ class _SafetyPageState extends State<SafetyPage> {
                           '妈妈：138****0000\n爸爸：139****0000',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey[800],
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -121,7 +121,7 @@ class _SafetyPageState extends State<SafetyPage> {
                           '本信息仅用于课程演示，未接入真实通讯录。',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.grey[600],
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ],
@@ -137,7 +137,7 @@ class _SafetyPageState extends State<SafetyPage> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.purple[700],
+              color: colorScheme.onBackground,
             ),
           ),
           const SizedBox(height: 12),
@@ -153,7 +153,7 @@ class _SafetyPageState extends State<SafetyPage> {
                   children: [
                     Icon(
                       Icons.check_circle,
-                      color: Colors.green[400],
+                      color: colorScheme.tertiary,
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -161,7 +161,7 @@ class _SafetyPageState extends State<SafetyPage> {
                         t,
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey[800],
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ),

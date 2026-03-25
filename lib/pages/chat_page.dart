@@ -38,6 +38,7 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final User? friend = ModalRoute.of(context)?.settings.arguments as User?;
     final String friendName = friend?.name ?? '好友';
     final String friendAvatar =
@@ -45,13 +46,13 @@ class ChatPage extends StatelessWidget {
     const String myAvatar = 'assets/images/avatar1.png'; // asset
 
     return Scaffold(
-      backgroundColor: Colors.blue[50],
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         title: Row(
           children: [
             CircleAvatar(
               radius: 18,
-              backgroundColor: Colors.purple[200],
+              backgroundColor: colorScheme.secondaryContainer,
               backgroundImage: AssetImage(
                   friendAvatar), // use asset instead of network image
             ),
@@ -65,8 +66,7 @@ class ChatPage extends StatelessWidget {
             ),
           ],
         ),
-        backgroundColor: Colors.purple[400],
-        elevation: 0,
+        backgroundColor: colorScheme.surface,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -99,9 +99,8 @@ class ChatPage extends StatelessWidget {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 1,
-                  blurRadius: 4,
+                  color: colorScheme.shadow.withOpacity(0.06),
+                  blurRadius: 10,
                   offset: const Offset(0, -2),
                 ),
               ],
@@ -111,7 +110,7 @@ class ChatPage extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey[100],
+                      color: colorScheme.surfaceVariant,
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: const TextField(
@@ -129,7 +128,7 @@ class ChatPage extends StatelessWidget {
                 const SizedBox(width: 8),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.purple[400],
+                    color: colorScheme.tertiary,
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
@@ -145,7 +144,7 @@ class ChatPage extends StatelessWidget {
       bottomNavigationBar: NavigationHelper.buildBottomNav(
         context,
         1,
-        selectedColor: Colors.orange[400],
+        selectedColor: colorScheme.primary,
       ),
     );
   }
