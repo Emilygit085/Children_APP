@@ -116,6 +116,7 @@ alembic upgrade head
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 
 # 启动成功后运行下面的flutter run命令
+flutter run -d edge --web-port 49873 --dart-define=API_BASE_URL=http://127.0.0.1:8000
 ```
 
 远程调试示例：`flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8000`（Android 模拟器常用 `http://10.0.2.2:8000`）。未设置 API_BASE_URL 时仍为仅本地 SQLite 行为。
