@@ -103,6 +103,7 @@ cd backend
 
 # 创建并激活venv
 python -m venv .venv
+
 .\.venv\Scripts\Activate.ps1
 
 # 安装依赖
