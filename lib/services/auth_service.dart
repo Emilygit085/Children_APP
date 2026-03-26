@@ -1,41 +1,36 @@
 import 'dart:convert';
-import 'package:crypto/crypto.dart';
-import '../database/database_helper.dart';
-import '../models/db_user.dart';
-import '../models/db_parent_profile.dart';
-import '../models/db_child_profile.dart';
 
-/// 认证服务
-/// 负责用户注册、登录等认证相关操作
+import 'package:crypto/crypto.dart';
+import 'package:dio/dio.dart';
+
+import '../config/api_config.dart';
+import '../database/database_helper.dart';
+import '../models/db_child_profile.dart';
+import '../models/db_parent_profile.dart';
+import '../models/db_user.dart';
+import 'api_client.dart';
+import 'token_storage.dart';
+
+/// 认证与用户资料：本地 SQLite（`API_BASE_URL` 未设置）或远端 FastAPI。
 class AuthService {
   static final AuthService instance = AuthService._init();
   AuthService._init();
 
   final DatabaseHelper _db = DatabaseHelper.instance;
 
-  /// 生成密码哈希
+  Dio get _dio => ApiClient.instance.dio;
+
+  bool get _remote => ApiConfig.useRemoteApi;
+
   String _hashPassword(String password) {
     final bytes = utf8.encode(password);
-    final digest = sha256.convert(bytes);
-    return digest.toString();
+    return sha256.convert(bytes).toString();
   }
 
-  /// 生成唯一ID
   String _generateId() {
     return DateTime.now().millisecondsSinceEpoch.toString();
   }
 
-  /// 注册用户
-  /// 
-  /// 参数：
-  /// - username: 用户名
-  /// - password: 密码（明文）
-  /// - role: 角色（'parent' 或 'child'）
-  /// - parentName: 家长姓名（仅家长需要）
-  /// - childName: 儿童姓名（仅儿童需要）
-  /// - age: 年龄（仅儿童需要）
-  /// 
-  /// 返回：注册成功的用户信息
   Future<DbUser> register({
     required String username,
     required String password,
@@ -44,13 +39,44 @@ class AuthService {
     String? childName,
     int? age,
   }) async {
-    // 检查用户名是否已存在
+    if (_remote) {
+      try {
+        if (role == 'parent') {
+          final res = await _dio.post<Map<String, dynamic>>(
+            '/auth/register/parent',
+            data: {
+              'username': username,
+              'password': password,
+              'display_name': parentName ?? '家长',
+              'phone': null,
+            },
+          );
+          final data = res.data!;
+          await TokenStorage.instance.save(data['access_token'] as String);
+          return DbUser.fromApiJson(Map<String, dynamic>.from(data['user'] as Map));
+        }
+        final res = await _dio.post<Map<String, dynamic>>(
+          '/auth/register/child',
+          data: {
+            'username': username,
+            'password': password,
+            'child_name': childName ?? '我',
+            'age': age ?? 8,
+          },
+        );
+        final data = res.data!;
+        await TokenStorage.instance.save(data['access_token'] as String);
+        return DbUser.fromApiJson(Map<String, dynamic>.from(data['user'] as Map));
+      } on DioException catch (e) {
+        throw Exception(e.response?.data?['detail'] ?? e.message ?? '注册失败');
+      }
+    }
+
     final existingUser = await _db.getUserByUsername(username);
     if (existingUser != null) {
       throw Exception('用户名已存在');
     }
 
-    // 创建用户
     final userId = _generateId();
     final passwordHash = _hashPassword(password);
     final createdAt = DateTime.now().toIso8601String();
@@ -63,10 +89,8 @@ class AuthService {
       createdAt: createdAt,
     );
 
-    // 插入用户
     await _db.insertUser(user.toMap());
 
-    // 根据角色创建对应的资料
     if (role == 'parent') {
       if (parentName == null) {
         throw Exception('家长注册需要提供姓名');
@@ -93,21 +117,27 @@ class AuthService {
     return user;
   }
 
-  /// 用户登录
-  /// 
-  /// 参数：
-  /// - username: 用户名
-  /// - password: 密码（明文）
-  /// 
-  /// 返回：登录成功的用户信息，如果失败返回 null
   Future<DbUser?> login(String username, String password) async {
-    // 查询用户
+    if (_remote) {
+      try {
+        final res = await _dio.post<Map<String, dynamic>>(
+          '/auth/login',
+          data: {'username': username, 'password': password},
+        );
+        final data = res.data!;
+        await TokenStorage.instance.save(data['access_token'] as String);
+        return DbUser.fromApiJson(Map<String, dynamic>.from(data['user'] as Map));
+      } on DioException catch (e) {
+        if (e.response?.statusCode == 401) return null;
+        throw Exception(e.response?.data?['detail'] ?? e.message ?? '登录失败');
+      }
+    }
+
     final userMap = await _db.getUserByUsername(username);
     if (userMap == null) {
       return null;
     }
 
-    // 验证密码
     final passwordHash = _hashPassword(password);
     if (userMap['password_hash'] != passwordHash) {
       return null;
@@ -116,24 +146,85 @@ class AuthService {
     return DbUser.fromMap(userMap);
   }
 
-  /// 根据用户ID获取用户信息
+  /// 退出远端会话（清除 token）。
+  Future<void> logoutRemote() async {
+    await TokenStorage.instance.clear();
+  }
+
   Future<DbUser?> getUserById(String userId) async {
+    if (_remote) {
+      final me = await _dio.get<Map<String, dynamic>>('/auth/me');
+      final u = me.data?['user'];
+      if (u == null) return null;
+      final du = DbUser.fromApiJson(Map<String, dynamic>.from(u as Map));
+      return du.id == userId ? du : null;
+    }
     final userMap = await _db.getUserById(userId);
     if (userMap == null) return null;
     return DbUser.fromMap(userMap);
   }
 
-  /// 获取家长资料
   Future<DbParentProfile?> getParentProfile(String userId) async {
+    if (_remote) {
+      final me = await _dio.get<Map<String, dynamic>>('/auth/me');
+      final pp = me.data?['parent_profile'];
+      if (pp == null) return null;
+      final m = Map<String, dynamic>.from(pp as Map);
+      return DbParentProfile(
+        userId: userId,
+        parentName: m['display_name'] as String? ?? '家长',
+        phone: m['phone'] as String?,
+      );
+    }
     final profileMap = await _db.getParentProfileByUserId(userId);
     if (profileMap == null) return null;
     return DbParentProfile.fromMap(profileMap);
   }
 
-  /// 获取儿童资料
   Future<DbChildProfile?> getChildProfile(String userId) async {
+    if (_remote) {
+      final me = await _dio.get<Map<String, dynamic>>('/auth/me');
+      final cp = me.data?['child_profile'];
+      if (cp == null) return null;
+      return DbChildProfile.fromApiJson(
+        userId,
+        Map<String, dynamic>.from(cp as Map),
+      );
+    }
     final profileMap = await _db.getChildProfileByUserId(userId);
     if (profileMap == null) return null;
     return DbChildProfile.fromMap(profileMap);
+  }
+
+  /// 更新儿童兴趣/性格（本地 SQLite 或远端 PATCH）。
+  Future<void> updateChildProfile(
+    String userId, {
+    List<String>? interests,
+    List<String>? personality,
+  }) async {
+    if (_remote) {
+      try {
+        await _dio.patch<Map<String, dynamic>>(
+          '/users/me/child-profile',
+          data: {
+            if (interests != null) 'interests': interests,
+            if (personality != null) 'personality': personality,
+          },
+        );
+      } on DioException catch (e) {
+        throw Exception(e.response?.data?['detail'] ?? e.message ?? '保存失败');
+      }
+      return;
+    }
+
+    final updates = <String, dynamic>{};
+    if (interests != null) {
+      updates['interests_json'] = jsonEncode(interests);
+    }
+    if (personality != null) {
+      updates['personality_json'] = jsonEncode(personality);
+    }
+    if (updates.isEmpty) return;
+    await _db.updateChildProfile(userId, updates);
   }
 }
