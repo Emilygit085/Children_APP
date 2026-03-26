@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/user.dart';
 import '../models/current_user.dart';
-import '../database/database_helper.dart';
+import '../services/auth_service.dart';
 
 class PersonalitySelectionPage extends StatefulWidget {
   const PersonalitySelectionPage({Key? key}) : super(key: key);
@@ -59,9 +59,9 @@ class _PersonalitySelectionPageState extends State<PersonalitySelectionPage> {
     try {
       // 保存性格到数据库
       final personalitiesList = _selectedPersonalities.toList();
-      await DatabaseHelper.instance.updateChildProfile(
+      await AuthService.instance.updateChildProfile(
         currentUser.id,
-        {'personality_json': personalitiesList.toString()},
+        personality: personalitiesList,
       );
 
       // 更新当前用户

@@ -1,7 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../models/current_user.dart';
-import '../database/database_helper.dart';
+import '../services/auth_service.dart';
 
 class InterestSelectionPage extends StatefulWidget {
   const InterestSelectionPage({Key? key}) : super(key: key);
@@ -165,9 +164,9 @@ class _InterestSelectionPageState extends State<InterestSelectionPage> {
 
     try {
       final interestsList = _selectedInterests.toList();
-      await DatabaseHelper.instance.updateChildProfile(
+      await AuthService.instance.updateChildProfile(
         currentUser.id,
-        {'interests_json': jsonEncode(interestsList)},
+        interests: interestsList,
       );
 
       CurrentUser.setInterests(interestsList);

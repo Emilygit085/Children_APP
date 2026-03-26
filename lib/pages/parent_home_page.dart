@@ -10,7 +10,7 @@ class ParentHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentUser = CurrentUser.user;
-    
+
     // 使用 FutureBuilder 异步加载绑定的儿童列表
     return FutureBuilder<List<dynamic>>(
       future: currentUser != null

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/user.dart';
 import '../models/current_user.dart';
 import '../services/auth_service.dart';
+import '../config/api_config.dart';
 import '../database/database_helper.dart';
 
 class LoginPage extends StatefulWidget {
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _initDatabase() async {
-    // 确保数据库已初始化
+    if (ApiConfig.useRemoteApi) return;
     await DatabaseHelper.instance.database;
   }
 

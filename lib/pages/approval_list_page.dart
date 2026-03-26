@@ -51,23 +51,28 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _buildSectionTitle(context, '待审批', Icons.pending_actions, colorScheme.secondary),
+          _buildSectionTitle(
+              context, '待审批', Icons.pending_actions, colorScheme.secondary),
           if (pendingRequests.isEmpty)
             _buildEmptyHint('当前没有待审批的活动申请')
           else
-            ...pendingRequests.map((r) => _buildRequestCard(r, isPending: true)),
+            ...pendingRequests
+                .map((r) => _buildRequestCard(r, isPending: true)),
           const SizedBox(height: 24),
-          _buildSectionTitle(context, '已处理', Icons.check_circle, colorScheme.tertiary),
+          _buildSectionTitle(
+              context, '已处理', Icons.check_circle, colorScheme.tertiary),
           if (processedRequests.isEmpty)
             _buildEmptyHint('还没有已处理的申请')
           else
-            ...processedRequests.map((r) => _buildRequestCard(r, isPending: false)),
+            ...processedRequests
+                .map((r) => _buildRequestCard(r, isPending: false)),
         ],
       ),
     );
   }
 
-  Widget _buildSectionTitle(BuildContext context, String title, IconData icon, Color color) {
+  Widget _buildSectionTitle(
+      BuildContext context, String title, IconData icon, Color color) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -221,7 +226,8 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
                     },
                     child: Text(
                       '拒绝',
-                      style: TextStyle(color: Theme.of(context).colorScheme.error),
+                      style:
+                          TextStyle(color: Theme.of(context).colorScheme.error),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -252,4 +258,3 @@ class _ApprovalListPageState extends State<ApprovalListPage> {
     );
   }
 }
-

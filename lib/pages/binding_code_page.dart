@@ -167,10 +167,13 @@ class _BindingCodePageState extends State<BindingCodePage> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final rolePrimary = widget.isParent ? colorScheme.tertiary : colorScheme.primary;
-    final roleOnPrimary = widget.isParent ? colorScheme.onTertiary : colorScheme.onPrimary;
-    final roleContainer =
-        widget.isParent ? colorScheme.tertiaryContainer : colorScheme.primaryContainer;
+    final rolePrimary =
+        widget.isParent ? colorScheme.tertiary : colorScheme.primary;
+    final roleOnPrimary =
+        widget.isParent ? colorScheme.onTertiary : colorScheme.onPrimary;
+    final roleContainer = widget.isParent
+        ? colorScheme.tertiaryContainer
+        : colorScheme.primaryContainer;
     final roleOnContainer = widget.isParent
         ? colorScheme.onTertiaryContainer
         : colorScheme.onPrimaryContainer;
