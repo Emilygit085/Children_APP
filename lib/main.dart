@@ -61,10 +61,10 @@ class MyApp extends StatelessWidget {
         '/interest-selection': (context) => const InterestSelectionPage(),
         '/personality-selection': (context) => const PersonalitySelectionPage(),
         '/home': (context) => HomePage(),
-        '/chat': (context) => ChatPage(),
-        '/activity': (context) => ActivityPage(),
+        '/chat': (context) => const ChatPage(),
+        '/activity': (context) => const ActivityPage(),
         '/create-activity': (context) => const CreateActivityPage(),
-        '/profile': (context) => ProfilePage(),
+        '/profile': (context) => const ProfilePage(),
         '/parent': (context) => _parentOnlyRoute(const ParentHomePage()),
         '/approval-list': (context) =>
             _parentOnlyRoute(const ApprovalListPage()),

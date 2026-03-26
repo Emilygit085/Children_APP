@@ -1,5 +1,3 @@
-import 'user.dart';
-
 /// 绑定关系模型
 class Binding {
   final String id;

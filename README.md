@@ -94,3 +94,27 @@ flutter create .
 # 文件夹说明
 `lib/` 存放了所有的工作代码
 `working_record/` 存放了大家提交PR时写的工作记录文档
+
+# 后端
+
+## 启用后端
+```bash
+cd backend
+
+# 创建并激活venv
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 数据库迁移
+alembic upgrade head
+
+# 启动后端服务
+uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+
+# 启动成功后运行下面的flutter run命令
+```
+
+远程调试示例：`flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8000`（Android 模拟器常用 `http://10.0.2.2:8000`）。未设置 API_BASE_URL 时仍为仅本地 SQLite 行为。

@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
-
 /// Web 平台内存存储辅助类
 /// 用于在 Web 平台模拟数据库操作（仅用于 Demo）
 class WebStorageHelper {

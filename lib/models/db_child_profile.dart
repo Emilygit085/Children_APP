@@ -18,6 +18,24 @@ class DbChildProfile {
     this.parentUserId,
   });
 
+  /// 来自远端 `/auth/me` 的 `child_profile` 对象。
+  factory DbChildProfile.fromApiJson(String userId, Map<String, dynamic> json) {
+    List<String> parseList(dynamic v) {
+      if (v == null) return [];
+      if (v is List) return v.map((e) => e.toString()).toList();
+      return [];
+    }
+
+    return DbChildProfile(
+      userId: userId,
+      childName: json['child_name'] as String? ?? '我',
+      age: (json['age'] is int) ? json['age'] as int : int.tryParse('${json['age']}') ?? 8,
+      interests: parseList(json['interests']),
+      personality: parseList(json['personality']),
+      parentUserId: json['parent_user_id'] as String?,
+    );
+  }
+
   /// 从 Map 创建（从数据库读取）
   factory DbChildProfile.fromMap(Map<String, dynamic> map) {
     List<String> interestsList = [];

@@ -14,6 +14,17 @@ class DbUser {
     required this.createdAt,
   });
 
+  /// 来自远端 `/auth/login` 等返回的 `user` 对象。
+  factory DbUser.fromApiJson(Map<String, dynamic> json) {
+    return DbUser(
+      id: json['id'] as String,
+      username: json['username'] as String,
+      passwordHash: '',
+      role: json['role'] as String,
+      createdAt: '',
+    );
+  }
+
   /// 从 Map 创建（从数据库读取）
   factory DbUser.fromMap(Map<String, dynamic> map) {
     return DbUser(
