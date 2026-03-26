@@ -302,7 +302,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     controller: _usernameController,
                     decoration: InputDecoration(
-                      hintText: '用户名',
+                      hintText: '用户名(最少2位)',
                       prefixIcon:
                           Icon(Icons.person, color: colorScheme.primary),
                       border: OutlineInputBorder(
@@ -331,7 +331,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      hintText: '密码',
+                      hintText: '密码(最少6位)',
                       prefixIcon: Icon(Icons.lock, color: colorScheme.primary),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
