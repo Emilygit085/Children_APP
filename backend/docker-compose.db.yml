@@ -1,0 +1,39 @@
+# MySQL 8 + Redis 7，仅绑定本机（127.0.0.1），避免公网暴露端口。
+# 使用方式：
+#   1. cp .env.docker.example .env.docker
+#   2. 编辑 .env.docker 填写密码
+#   3. sudo docker compose -f docker-compose.db.yml up -d
+#
+# FastAPI 与容器同机时：backend/.env 中 DATABASE_URL / REDIS_URL 使用 127.0.0.1 即可。
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: social_app_mysql
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    environment:
+      MYSQL_DATABASE: social_app
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+
+  redis:
+    image: redis:7-alpine
+    container_name: social_app_redis
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+volumes:
+  mysql_data:
+  redis_data:
