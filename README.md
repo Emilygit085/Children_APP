@@ -115,8 +115,17 @@ alembic upgrade head
 # 启动后端服务
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 
-# 启动成功后运行下面的flutter run命令
+# 启动成功后运行下面的flutter run命令 （本地运行测试）
 flutter run -d edge --web-port 49873 --dart-define=API_BASE_URL=http://127.0.0.1:8000
-```
 
-远程调试示例：`flutter run --dart-define=API_BASE_URL=http://127.0.0.1:8000`（Android 模拟器常用 `http://10.0.2.2:8000`）。未设置 API_BASE_URL 时仍为仅本地 SQLite 行为。
+# 例如：
+cd D:\Codefield\Social_APP
+flutter run -d edge --web-hostname 0.0.0.0 --web-port 49873 --dart-define=API_BASE_URL=http://101.35.25.32:8000
+```
+未设置 API_BASE_URL 时仍为仅本地 SQLite 行为。
+
+## 静态网页
+
+```bash
+flutter build web --release --no-web-resources-cdn --dart-define=API_BASE_URL=http://101.35.25.32:8000
+```
