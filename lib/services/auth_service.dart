@@ -31,6 +31,13 @@ class AuthService {
     return DateTime.now().millisecondsSinceEpoch.toString();
   }
 
+  String _dioDetail(DioException e, String fallback) {
+    final data = e.response?.data;
+    if (data is Map && data['detail'] != null) return '${data['detail']}';
+    if (data is String && data.isNotEmpty) return data;
+    return e.message ?? fallback;
+  }
+
   Future<DbUser> register({
     required String username,
     required String password,
@@ -68,7 +75,7 @@ class AuthService {
         await TokenStorage.instance.save(data['access_token'] as String);
         return DbUser.fromApiJson(Map<String, dynamic>.from(data['user'] as Map));
       } on DioException catch (e) {
-        throw Exception(e.response?.data?['detail'] ?? e.message ?? '注册失败');
+        throw Exception(_dioDetail(e, '注册失败'));
       }
     }
 
@@ -129,7 +136,7 @@ class AuthService {
         return DbUser.fromApiJson(Map<String, dynamic>.from(data['user'] as Map));
       } on DioException catch (e) {
         if (e.response?.statusCode == 401) return null;
-        throw Exception(e.response?.data?['detail'] ?? e.message ?? '登录失败');
+        throw Exception(_dioDetail(e, '登录失败'));
       }
     }
 
@@ -212,7 +219,7 @@ class AuthService {
           },
         );
       } on DioException catch (e) {
-        throw Exception(e.response?.data?['detail'] ?? e.message ?? '保存失败');
+        throw Exception(_dioDetail(e, '保存失败'));
       }
       return;
     }
