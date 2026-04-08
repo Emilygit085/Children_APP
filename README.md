@@ -113,7 +113,10 @@ pip install -r requirements.txt
 alembic upgrade head
 
 # 启动后端服务
-uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+# uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+
+# 对外监听
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 # 启动成功后运行下面的flutter run命令 （本地运行测试）
 flutter run -d edge --web-port 49873 --dart-define=API_BASE_URL=http://127.0.0.1:8000
